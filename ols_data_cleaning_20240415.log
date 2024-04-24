@@ -1,0 +1,874 @@
+------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/shuhuisun/Downloads/ECON501/Project/ols_data_cleaning_20240415.log
+  log type:  text
+ opened on:  18 Apr 2024, 13:00:30
+
+. 
+. 
+. use "/Users/shuhuisun/Downloads/ECON501/Project/dollarization - Data - 20240415.dta"
+
+. 
+. 
+.  
+. 
+. //data cleaning//
+. describe 
+
+Contains data from /Users/shuhuisun/Downloads/ECON501/Project/dollarization - Data - 20240415.dta
+  obs:         1,008                          
+ vars:            30                          15 Apr 2024 22:40
+------------------------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+------------------------------------------------------------------------------------------------------
+time            int     %8.0g                 Time
+timecode        str6    %9s                   Time Code
+countryname     str30   %30s                  Country Name
+countrycode     str3    %9s                   Country Code
+politicalstab~i str5    %9s                   Political Stability and Absence of Violence/Terrorism:
+                                                Estimate [PV.EST]
+exportsofgood~n str11   %11s                  Exports of goods and services (constant 2015 US$)
+                                                [NE.EXP.GNFS.KD]
+exportsofgood~g str6    %9s                   Exports of goods and services (annual % growth)
+                                                [NE.EXP.GNFS.KD.ZG]
+realeffectiv~20 str6    %9s                   Real effective exchange rate index (2010 = 100)
+                                                [PX.REX.REER]
+agriculturefo~l str5    %9s                   Agriculture, forestry, and fishing, value added (% of
+                                                GDP) [NV.AGR.TOTL.ZS]
+generalgovern~o str5    %9s                   General government final consumption expenditure (% of
+                                                GDP) [NE.CON.GOVT.ZS]
+grosssavingso~s str6    %9s                   Gross savings (% of GDP) [NY.GNS.ICTR.ZS]
+manufacturing~n str5    %9s                   Manufacturing, value added (% of GDP) [NV.IND.MANF.ZS]
+servicesvalue~l str5    %9s                   Services, value added (% of GDP) [NV.SRV.TOTL.ZS]
+householdsand~t str6    %9s                   Households and NPISHs final consumption expenditure (%
+                                                of GDP) [NE.CON.PRVT.ZS]
+exportsofgood~e str6    %9s                   Exports of goods and services (% of GDP)
+                                                [NE.EXP.GNFS.ZS]
+netforeignass~n str12   %12s                  Net foreign assets (current LCU) [FM.AST.NFRG.CN]
+netdomesticcr~t str11   %11s                  Net domestic credit (current LCU) [FM.AST.DOMS.CN]
+gdppercapitag~a str6    %9s                   GDP per capita growth (annual %) [NY.GDP.PCAP.KD.ZG]
+gdpgrowthannu~g str6    %9s                   GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]
+gdppercapitac~p str8    %9s                   GDP per capita (constant 2015 US$) [NY.GDP.PCAP.KD]
+gdpconstant20~d str11   %11s                  GDP (constant 2015 US$) [NY.GDP.MKTP.KD]
+personalremit~p str5    %9s                   Personal remittances, received (% of GDP)
+                                                [BX.TRF.PWKR.DT.GD.ZS]
+foreigndirect~w str7    %9s                   Foreign direct investment, net inflows (% of GDP)
+                                                [BX.KLT.DINV.WD.GD.ZS]
+var24           str5    %9s                   Political Stability and Absence of Violence/Terrorism:
+                                                Estimate [PV.EST]
+grosscapitalf~t str5    %9s                   Gross capital formation (% of GDP) [NE.GDI.TOTL.ZS]
+agriculturalr~o str5    %9s                   Agricultural raw materials exports (% of merchandise
+                                                exports) [TX.VAL.AGRI.ZS.UN
+var27           str6    %9s                   Exports of goods and services (annual % growth)
+                                                [NE.EXP.GNFS.KD.ZG]
+fuelexportsof~t str5    %9s                   Fuel exports (% of merchandise exports)
+                                                [TX.VAL.FUEL.ZS.UN]
+foodexportsof~t str5    %9s                   Food exports (% of merchandise exports)
+                                                [TX.VAL.FOOD.ZS.UN]
+merchandiseex~g str11   %11s                  Merchandise exports by the reporting economy (current
+                                                US$) [TX.VAL.MRCH.WL.CD]
+------------------------------------------------------------------------------------------------------
+Sorted by: 
+
+. 
+. 
+. rename politicalstabilityandabsenceofvi political_stability
+
+. rename exportsofgoodsandservicesconstan  export_value
+
+. rename exportsofgoodsandservicesannualg  export_growth
+
+. rename gdppercapitagrowthannualnygdppca  gdp_pc_growth
+
+. rename realeffectiveexchangerateindex20  exchange_rate
+
+. rename agricultureforestryandfishingval  structure_agri
+
+. rename generalgovernmentfinalconsumptio govt_exp
+
+. rename manufacturingvalueaddedofgdpnvin structure_manu
+
+. rename servicesvalueaddedofgdpnvsrvtotl structure_service
+
+. rename householdsandnpishsfinalconsumpt consumption
+
+. rename exportsofgoodsandservicesofgdpne export_percent
+
+. rename netforeignassetscurrentlcufmastn foreign_asset
+
+. rename gdppercapitaconstant2015usnygdpp gdp_pc
+
+. rename gdpconstant2015usnygdpmktpkd     gdp
+
+. rename personalremittancesreceivedofgdp remittance
+
+. rename foreigndirectinvestmentnetinflow fdi
+
+. rename grosscapitalformationofgdpnegdit investment
+
+. rename agriculturalrawmaterialsexportso expo_agri
+
+. rename fuelexportsofmerchandiseexportst expo_fuel
+
+. rename foodexportsofmerchandiseexportst expo_food
+
+. 
+. drop var24
+
+. drop var27
+
+. drop merchandiseexportsbythereporting
+
+. 
+. drop if time==1990
+(42 observations deleted)
+
+. 
+. 
+. rename grosssavingsofgdpnygnsictrzs      saving
+
+. rename netdomesticcreditcurrentlcufmast  domestic_credit
+
+. drop gdpgrowthannualnygdpmktpkdzg
+
+. 
+. 
+. destring time saving political_stability export_value export_growth exchange_rate structure_agri gov
+> t_exp structure_manu structure_service consumption export_percent foreign_asset domestic_credit gdp_
+> pc_growth gdp_pc gdp remittance fdi investment expo_agri expo_fuel expo_food, replace force
+time already numeric; no replace
+saving: contains nonnumeric characters; replaced as double
+(403 missing values generated)
+political_stability: contains nonnumeric characters; replaced as double
+(160 missing values generated)
+export_value: contains nonnumeric characters; replaced as double
+(466 missing values generated)
+export_growth: contains nonnumeric characters; replaced as double
+(460 missing values generated)
+exchange_rate: contains nonnumeric characters; replaced as double
+(489 missing values generated)
+structure_agri: contains nonnumeric characters; replaced as double
+(114 missing values generated)
+govt_exp: contains nonnumeric characters; replaced as double
+(329 missing values generated)
+structure_manu: contains nonnumeric characters; replaced as double
+(118 missing values generated)
+structure_service: contains nonnumeric characters; replaced as double
+(106 missing values generated)
+consumption: contains nonnumeric characters; replaced as double
+(333 missing values generated)
+export_percent: contains nonnumeric characters; replaced as double
+(313 missing values generated)
+foreign_asset: contains nonnumeric characters; replaced as double
+(221 missing values generated)
+domestic_credit: contains nonnumeric characters; replaced as double
+(221 missing values generated)
+gdp_pc_growth: contains nonnumeric characters; replaced as double
+(81 missing values generated)
+gdp_pc: contains nonnumeric characters; replaced as double
+(98 missing values generated)
+gdp: contains nonnumeric characters; replaced as double
+(98 missing values generated)
+remittance: contains nonnumeric characters; replaced as double
+(177 missing values generated)
+fdi: contains nonnumeric characters; replaced as double
+(174 missing values generated)
+investment: contains nonnumeric characters; replaced as double
+(344 missing values generated)
+expo_agri: contains nonnumeric characters; replaced as double
+(267 missing values generated)
+expo_fuel: contains nonnumeric characters; replaced as double
+(285 missing values generated)
+expo_food: contains nonnumeric characters; replaced as double
+(267 missing values generated)
+
+. 
+. 
+. describe 
+
+Contains data from /Users/shuhuisun/Downloads/ECON501/Project/dollarization - Data - 20240415.dta
+  obs:           966                          
+ vars:            26                          15 Apr 2024 22:40
+------------------------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+------------------------------------------------------------------------------------------------------
+time            int     %8.0g                 Time
+timecode        str6    %9s                   Time Code
+countryname     str30   %30s                  Country Name
+countrycode     str3    %9s                   Country Code
+political_sta~y double  %10.0g                Political Stability and Absence of Violence/Terrorism:
+                                                Estimate [PV.EST]
+export_value    double  %10.0g                Exports of goods and services (constant 2015 US$)
+                                                [NE.EXP.GNFS.KD]
+export_growth   double  %10.0g                Exports of goods and services (annual % growth)
+                                                [NE.EXP.GNFS.KD.ZG]
+exchange_rate   double  %10.0g                Real effective exchange rate index (2010 = 100)
+                                                [PX.REX.REER]
+structure_agri  double  %10.0g                Agriculture, forestry, and fishing, value added (% of
+                                                GDP) [NV.AGR.TOTL.ZS]
+govt_exp        double  %10.0g                General government final consumption expenditure (% of
+                                                GDP) [NE.CON.GOVT.ZS]
+saving          double  %10.0g                Gross savings (% of GDP) [NY.GNS.ICTR.ZS]
+structure_manu  double  %10.0g                Manufacturing, value added (% of GDP) [NV.IND.MANF.ZS]
+structure_ser~e double  %10.0g                Services, value added (% of GDP) [NV.SRV.TOTL.ZS]
+consumption     double  %10.0g                Households and NPISHs final consumption expenditure (%
+                                                of GDP) [NE.CON.PRVT.ZS]
+export_percent  double  %10.0g                Exports of goods and services (% of GDP)
+                                                [NE.EXP.GNFS.ZS]
+foreign_asset   double  %10.0g                Net foreign assets (current LCU) [FM.AST.NFRG.CN]
+domestic_credit double  %10.0g                Net domestic credit (current LCU) [FM.AST.DOMS.CN]
+gdp_pc_growth   double  %10.0g                GDP per capita growth (annual %) [NY.GDP.PCAP.KD.ZG]
+gdp_pc          double  %10.0g                GDP per capita (constant 2015 US$) [NY.GDP.PCAP.KD]
+gdp             double  %10.0g                GDP (constant 2015 US$) [NY.GDP.MKTP.KD]
+remittance      double  %10.0g                Personal remittances, received (% of GDP)
+                                                [BX.TRF.PWKR.DT.GD.ZS]
+fdi             double  %10.0g                Foreign direct investment, net inflows (% of GDP)
+                                                [BX.KLT.DINV.WD.GD.ZS]
+investment      double  %10.0g                Gross capital formation (% of GDP) [NE.GDI.TOTL.ZS]
+expo_agri       double  %10.0g                Agricultural raw materials exports (% of merchandise
+                                                exports) [TX.VAL.AGRI.ZS.UN
+expo_fuel       double  %10.0g                Fuel exports (% of merchandise exports)
+                                                [TX.VAL.FUEL.ZS.UN]
+expo_food       double  %10.0g                Food exports (% of merchandise exports)
+                                                [TX.VAL.FOOD.ZS.UN]
+------------------------------------------------------------------------------------------------------
+Sorted by: 
+     Note: Dataset has changed since last saved.
+
+. 
+. summarize
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        time |        966        2011    6.636686       2000       2022
+    timecode |          0
+ countryname |          0
+ countrycode |          0
+political_~y |        806     .137531    .7436317      -2.38       1.65
+-------------+---------------------------------------------------------
+export_value |        500    4.07e+10    8.19e+10   2.51e+08   5.16e+11
+export_gro~h |        506    3.853123    14.31887     -78.39     130.17
+exchange_r~e |        477    100.5469    34.23432      53.79      741.7
+structure_~i |        852    6.616878     5.71766        .01         34
+    govt_exp |        637    14.93608    5.937233       2.01      43.23
+-------------+---------------------------------------------------------
+      saving |        563    18.09171     7.32458     -11.26      55.61
+structure_~u |        848     11.4834    8.166385        .52      48.44
+structure_~e |        860    60.63044    11.34452      19.27      89.34
+ consumption |        633    68.27044    11.30636      35.92     101.34
+export_per~t |        653    39.58753    35.39225       6.28     433.84
+-------------+---------------------------------------------------------
+foreign_as~t |        745    4.08e+12    1.97e+13  -5.51e+10   2.40e+14
+domestic_c~t |        745    1.54e+13    7.06e+13   2.68e+08   8.18e+14
+gdp_pc_gro~h |        885    1.492045    5.560854     -28.76      62.53
+      gdp_pc |        868    12970.06    13598.35    1247.89   96280.25
+         gdp |        868    1.21e+11    3.18e+11   4.15e+08   1.90e+12
+-------------+---------------------------------------------------------
+  remittance |        789    4.846299    5.658725          0      26.75
+         fdi |        792    14.62385    92.72307     -19.77    1709.83
+  investment |        622    21.28399    6.394624       7.61      50.19
+   expo_agri |        699    2.065951    3.010566          0      37.64
+   expo_fuel |        681    12.98251    20.88496          0      98.76
+-------------+---------------------------------------------------------
+   expo_food |        699    36.96339    24.33775          0      93.93
+
+. 
+. 
+. gen dollarization = foreign_asset / domestic_credit
+(221 missing values generated)
+
+. 
+. gen t = time-2000
+
+. 
+. *gen lggdp = log(gdp)
+. 
+. **ols
+. reg gdp_pc_growth dollarization govt_exp investment consumption export_percent
+
+      Source |       SS           df       MS      Number of obs   =       359
+-------------+----------------------------------   F(5, 353)       =      8.43
+       Model |   492.39878         5   98.479756   Prob > F        =    0.0000
+    Residual |  4124.85195       353   11.685133   R-squared       =    0.1066
+-------------+----------------------------------   Adj R-squared   =    0.0940
+       Total |  4617.25073       358  12.8973484   Root MSE        =    3.4184
+
+--------------------------------------------------------------------------------
+ gdp_pc_growth |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+---------------+----------------------------------------------------------------
+ dollarization |   1.582966   .4843155     3.27   0.001     .6304595    2.535473
+      govt_exp |  -.2240359   .0525227    -4.27   0.000    -.3273326   -.1207392
+    investment |   .0098839   .0313407     0.32   0.753     -.051754    .0715219
+   consumption |  -.0330378   .0174453    -1.89   0.059    -.0673476     .001272
+export_percent |   .0348134   .0132004     2.64   0.009      .008852    .0607747
+         _cons |   5.307223   1.747634     3.04   0.003     1.870139    8.744307
+--------------------------------------------------------------------------------
+
+. outreg2 using ols_classical_20240415, excel dec(3) replace
+ols_classical_20240415.xml
+dir : seeout
+
+. 
+. reg gdp_pc_growth dollarization govt_exp investment consumption export_percent t
+
+      Source |       SS           df       MS      Number of obs   =       359
+-------------+----------------------------------   F(6, 352)       =     10.37
+       Model |  693.763277         6  115.627213   Prob > F        =    0.0000
+    Residual |  3923.48746       352  11.1462712   R-squared       =    0.1503
+-------------+----------------------------------   Adj R-squared   =    0.1358
+       Total |  4617.25073       358  12.8973484   Root MSE        =    3.3386
+
+--------------------------------------------------------------------------------
+ gdp_pc_growth |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+---------------+----------------------------------------------------------------
+ dollarization |   1.330888   .4767201     2.79   0.006     .3933099    2.268466
+      govt_exp |  -.2583002   .0519269    -4.97   0.000    -.3604262   -.1561742
+    investment |    .003306   .0306486     0.11   0.914    -.0569714    .0635835
+   consumption |  -.0351476   .0170455    -2.06   0.040    -.0686715   -.0016237
+export_percent |   .0395864   .0129413     3.06   0.002     .0141345    .0650383
+             t |   .1316483   .0309734     4.25   0.000     .0707321    .1925644
+         _cons |   4.835473   1.710467     2.83   0.005     1.471452    8.199493
+--------------------------------------------------------------------------------
+
+. outreg2 using ols_classical_20240415, excel dec(3) 
+ols_classical_20240415.xml
+dir : seeout
+
+. 
+. reg gdp_pc_growth dollarization govt_exp investment consumption export_percent t saving structure_ag
+> ri structure_manu structure_service 
+
+      Source |       SS           df       MS      Number of obs   =       357
+-------------+----------------------------------   F(10, 346)      =      7.26
+       Model |  773.103448        10  77.3103448   Prob > F        =    0.0000
+    Residual |  3683.90745       346  10.6471314   R-squared       =    0.1735
+-------------+----------------------------------   Adj R-squared   =    0.1496
+       Total |   4457.0109       356  12.5196935   Root MSE        =     3.263
+
+-----------------------------------------------------------------------------------
+    gdp_pc_growth |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+------------------+----------------------------------------------------------------
+    dollarization |   .6203993   .5186502     1.20   0.232    -.3997046    1.640503
+         govt_exp |  -.2402985   .0659577    -3.64   0.000    -.3700269     -.11057
+       investment |   -.005998   .0305116    -0.20   0.844    -.0660095    .0540135
+      consumption |   .0071064   .0323185     0.22   0.826     -.056459    .0706718
+   export_percent |   .0626803   .0152297     4.12   0.000     .0327259    .0926347
+                t |   .1204221    .031581     3.81   0.000     .0583072    .1825371
+           saving |  -.0102294    .042145    -0.24   0.808     -.093122    .0726631
+   structure_agri |  -.1636366   .0612101    -2.67   0.008    -.2840272    -.043246
+   structure_manu |  -.0064022   .0493077    -0.13   0.897    -.1033827    .0905784
+structure_service |  -.1191941   .0355529    -3.35   0.001    -.1891211    -.049267
+            _cons |   9.862834   3.812289     2.59   0.010     2.364657    17.36101
+-----------------------------------------------------------------------------------
+
+. outreg2 using ols_sa_20240415, excel dec(3) replace
+ols_sa_20240415.xml
+dir : seeout
+
+. 
+. 
+. reg gdp_pc_growth dollarization govt_exp investment consumption export_percent t saving structure_ag
+> ri structure_manu structure_service expo_agri expo_fuel expo_food
+
+      Source |       SS           df       MS      Number of obs   =       292
+-------------+----------------------------------   F(13, 278)      =      5.28
+       Model |  773.240916        13  59.4800704   Prob > F        =    0.0000
+    Residual |  3131.31757       278  11.2637323   R-squared       =    0.1980
+-------------+----------------------------------   Adj R-squared   =    0.1605
+       Total |  3904.55849       291  13.4177268   Root MSE        =    3.3561
+
+-----------------------------------------------------------------------------------
+    gdp_pc_growth |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+------------------+----------------------------------------------------------------
+    dollarization |   .4300259   .6118345     0.70   0.483    -.7743912    1.634443
+         govt_exp |  -.2455742   .0748239    -3.28   0.001    -.3928675   -.0982809
+       investment |  -.0110859   .0414546    -0.27   0.789    -.0926906    .0705188
+      consumption |   .0041042   .0382383     0.11   0.915    -.0711691    .0793775
+   export_percent |   .0585714   .0172641     3.39   0.001     .0245864    .0925564
+                t |   .1287302   .0381687     3.37   0.001     .0535938    .2038666
+           saving |  -.0177775   .0485848    -0.37   0.715    -.1134184    .0778633
+   structure_agri |  -.1479562   .0710621    -2.08   0.038    -.2878444    -.008068
+   structure_manu |  -.0160243    .056653    -0.28   0.778    -.1275476     .095499
+structure_service |  -.1145985   .0410011    -2.80   0.006    -.1953105   -.0338865
+        expo_agri |   .2694297   .0859706     3.13   0.002     .1001937    .4386657
+        expo_fuel |  -.0171709   .0109431    -1.57   0.118    -.0387128     .004371
+        expo_food |  -.0116995   .0097981    -1.19   0.233    -.0309874    .0075883
+            _cons |   10.24158   4.322487     2.37   0.019     1.732615    18.75054
+-----------------------------------------------------------------------------------
+
+. outreg2 using ols_sa_20240415, excel dec(3) 
+ols_sa_20240415.xml
+dir : seeout
+
+. 
+. 
+. reg gdp_pc_growth dollarization govt_exp investment consumption export_percent t saving structure_ag
+> ri structure_manu structure_service expo_agri expo_fuel expo_food political_stability export_growth 
+> exchange_rate remittance fdi
+
+      Source |       SS           df       MS      Number of obs   =       132
+-------------+----------------------------------   F(18, 113)      =      6.26
+       Model |  950.140322        18  52.7855734   Prob > F        =    0.0000
+    Residual |  952.573366       113  8.42985279   R-squared       =    0.4994
+-------------+----------------------------------   Adj R-squared   =    0.4196
+       Total |  1902.71369       131   14.524532   Root MSE        =    2.9034
+
+-------------------------------------------------------------------------------------
+      gdp_pc_growth |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------------+----------------------------------------------------------------
+      dollarization |   1.973684   .8296265     2.38   0.019     .3300439    3.617324
+           govt_exp |  -.1418329   .1451166    -0.98   0.330     -.429335    .1456692
+         investment |  -.0083748   .0621445    -0.13   0.893    -.1314941    .1147446
+        consumption |   .0558739   .0906971     0.62   0.539    -.1238135    .2355613
+     export_percent |  -.0634385   .0386919    -1.64   0.104    -.1400941    .0132171
+                  t |   .1695296   .0551967     3.07   0.003     .0601751    .2788841
+             saving |   .1369324   .0969442     1.41   0.161    -.0551316    .3289964
+     structure_agri |   .0270348   .1388589     0.19   0.846    -.2480698    .3021394
+     structure_manu |  -.0578761    .091445    -0.63   0.528    -.2390451     .123293
+  structure_service |  -.0968181   .0625349    -1.55   0.124     -.220711    .0270747
+          expo_agri |  -.0730182   .1212275    -0.60   0.548    -.3131919    .1671554
+          expo_fuel |  -.0089798   .0145035    -0.62   0.537     -.037714    .0197543
+          expo_food |   .0144078   .0131327     1.10   0.275    -.0116105    .0404261
+political_stability |     1.0303   .4588253     2.25   0.027     .1212843    1.939316
+      export_growth |    .253652   .0348392     7.28   0.000     .1846293    .3226746
+      exchange_rate |   .0028474   .0204214     0.14   0.889    -.0376111    .0433059
+         remittance |  -.0863327   .0470004    -1.84   0.069     -.179449    .0067836
+                fdi |   .0916477    .104638     0.88   0.383     -.115659    .2989543
+              _cons |   2.178004    9.20828     0.24   0.813    -16.06526    20.42127
+-------------------------------------------------------------------------------------
+
+. outreg2 using ols_sa_20240415, excel dec(3) 
+ols_sa_20240415.xml
+dir : seeout
+
+. 
+. drop if gdp_pc_growth==. | dollarization==. | govt_exp==. | investment==. | consumption==. | export_
+> percent==. | t==. | saving==. | structure_agri==. | structure_manu==. | structure_service==. | expo_
+> agri==. | expo_fuel==. | expo_food==. | political_stability==. | export_growth==. | exchange_rate==.
+>  | remittance==. | fdi==.
+(834 observations deleted)
+
+. 
+. summarize
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        time |        132    2009.182    5.683535       2000       2022
+    timecode |          0
+ countryname |          0
+ countrycode |          0
+political_~y |        132   -.1126515    .7816569      -2.38       1.28
+-------------+---------------------------------------------------------
+export_value |        124    5.66e+10    1.01e+11   5.66e+08   4.73e+11
+export_gro~h |        132    4.553864    8.207776     -12.88       39.9
+exchange_r~e |        132     96.8547    15.02443      54.59     151.04
+structure_~i |        132    7.271515    4.288964        .57      17.77
+    govt_exp |        132     13.1328    2.965994       7.43      19.81
+-------------+---------------------------------------------------------
+      saving |        132    20.48038    5.542022       8.61      40.64
+structure_~u |        132    12.95432    4.807672        .98      21.76
+structure_~e |        132    56.51174    10.02559      35.07      82.39
+ consumption |        132    65.69432    7.081576      46.75      88.85
+export_per~t |        132    32.29909    10.79364      10.85      57.12
+-------------+---------------------------------------------------------
+foreign_as~t |        132    6.66e+12    1.76e+13  -5.51e+10   1.32e+14
+domestic_c~t |        132    2.35e+13    6.25e+13   7.23e+08   4.21e+14
+gdp_pc_gro~h |        132     2.15803    3.811106     -10.48      16.28
+      gdp_pc |        124    9234.287     7943.14    1429.72   33129.48
+         gdp |        124    2.75e+11    5.04e+11   1.36e+09   1.90e+12
+-------------+---------------------------------------------------------
+  remittance |        132    5.558939    6.370997          0      25.29
+         fdi |        132    3.891894    2.960125      -3.08      16.23
+  investment |        132    22.26091    4.786722      11.59      36.04
+   expo_agri |        132    2.565303    2.398125          0      13.48
+   expo_fuel |        132    15.10765     21.8405          0      98.76
+-------------+---------------------------------------------------------
+   expo_food |        132    38.49538    21.85803          0      92.66
+dollarizat~n |        132    .3282174    .4222991  -.5084891   2.407608
+           t |        132    9.181818    5.683535          0         22
+
+. 
+. export delimited using model_obs.csv, replace
+(note: file model_obs.csv not found)
+file model_obs.csv saved
+
+. 
+. 
+. 
+. *modeled half of the variation. the other half may be hard to quantify and record including politica
+> l leadership, intervention of internaitonal institutions, or global financial incidents
+. 
+. 
+. **interaction
+. **economic structure
+. 
+. reg gdp_pc_growth dollarization govt_exp investment consumption export_percent t saving structure_ag
+> ri structure_manu structure_service expo_agri expo_fuel expo_food political_stability export_growth 
+> exchange_rate remittance fdi
+
+      Source |       SS           df       MS      Number of obs   =       132
+-------------+----------------------------------   F(18, 113)      =      6.26
+       Model |  950.140322        18  52.7855734   Prob > F        =    0.0000
+    Residual |  952.573366       113  8.42985279   R-squared       =    0.4994
+-------------+----------------------------------   Adj R-squared   =    0.4196
+       Total |  1902.71369       131   14.524532   Root MSE        =    2.9034
+
+-------------------------------------------------------------------------------------
+      gdp_pc_growth |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------------+----------------------------------------------------------------
+      dollarization |   1.973684   .8296265     2.38   0.019     .3300439    3.617324
+           govt_exp |  -.1418329   .1451166    -0.98   0.330     -.429335    .1456692
+         investment |  -.0083748   .0621445    -0.13   0.893    -.1314941    .1147446
+        consumption |   .0558739   .0906971     0.62   0.539    -.1238135    .2355613
+     export_percent |  -.0634385   .0386919    -1.64   0.104    -.1400941    .0132171
+                  t |   .1695296   .0551967     3.07   0.003     .0601751    .2788841
+             saving |   .1369324   .0969442     1.41   0.161    -.0551316    .3289964
+     structure_agri |   .0270348   .1388589     0.19   0.846    -.2480698    .3021394
+     structure_manu |  -.0578761    .091445    -0.63   0.528    -.2390451     .123293
+  structure_service |  -.0968181   .0625349    -1.55   0.124     -.220711    .0270747
+          expo_agri |  -.0730182   .1212275    -0.60   0.548    -.3131919    .1671554
+          expo_fuel |  -.0089798   .0145035    -0.62   0.537     -.037714    .0197543
+          expo_food |   .0144078   .0131327     1.10   0.275    -.0116105    .0404261
+political_stability |     1.0303   .4588253     2.25   0.027     .1212843    1.939316
+      export_growth |    .253652   .0348392     7.28   0.000     .1846293    .3226746
+      exchange_rate |   .0028474   .0204214     0.14   0.889    -.0376111    .0433059
+         remittance |  -.0863327   .0470004    -1.84   0.069     -.179449    .0067836
+                fdi |   .0916477    .104638     0.88   0.383     -.115659    .2989543
+              _cons |   2.178004    9.20828     0.24   0.813    -16.06526    20.42127
+-------------------------------------------------------------------------------------
+
+. outreg2 using ols_interaction_20240415, excel dec(3)  replace
+ols_interaction_20240415.xml
+dir : seeout
+
+. 
+. gen agri_dollar = structure_agri*dollarization
+
+. gen manu_dollar = structure_manu*dollarization
+
+. gen service_dollar = structure_service*dollarization
+
+. reg gdp_pc_growth dollarization govt_exp investment consumption export_percent t saving structure_ag
+> ri structure_manu structure_service expo_agri expo_fuel expo_food political_stability export_growth 
+> exchange_rate remittance fdi agri_dollar manu_dollar service_dollar
+
+      Source |       SS           df       MS      Number of obs   =       132
+-------------+----------------------------------   F(21, 110)      =      5.31
+       Model |  957.394519        21  45.5902152   Prob > F        =    0.0000
+    Residual |  945.319169       110  8.59381063   R-squared       =    0.5032
+-------------+----------------------------------   Adj R-squared   =    0.4083
+       Total |  1902.71369       131   14.524532   Root MSE        =    2.9315
+
+-------------------------------------------------------------------------------------
+      gdp_pc_growth |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------------+----------------------------------------------------------------
+      dollarization |   5.213256   7.483356     0.70   0.487    -9.616999    20.04351
+           govt_exp |   -.214144   .1781353    -1.20   0.232    -.5671663    .1388784
+         investment |  -.0085332   .0633386    -0.13   0.893    -.1340555    .1169891
+        consumption |   .0056127   .1211192     0.05   0.963    -.2344172    .2456426
+     export_percent |   -.069837    .040989    -1.70   0.091    -.1510676    .0113937
+                  t |    .179792    .062315     2.89   0.005     .0562983    .3032857
+             saving |   .1139038   .1125884     1.01   0.314      -.10922    .3370276
+     structure_agri |   .1002719   .1755231     0.57   0.569    -.2475736    .4481175
+     structure_manu |  -.0084888   .1370235    -0.06   0.951    -.2800371    .2630596
+  structure_service |  -.0676284   .0880094    -0.77   0.444    -.2420424    .1067855
+          expo_agri |  -.0586274   .1249597    -0.47   0.640    -.3062682    .1890134
+          expo_fuel |  -.0099362   .0147751    -0.67   0.503     -.039217    .0193447
+          expo_food |      .0143   .0134511     1.06   0.290     -.012357    .0409569
+political_stability |   .9519325   .4742154     2.01   0.047     .0121489    1.891716
+      export_growth |   .2512487   .0352915     7.12   0.000     .1813091    .3211882
+      exchange_rate |   .0025734   .0213429     0.12   0.904    -.0397232      .04487
+         remittance |  -.0865484   .0477803    -1.81   0.073    -.1812376    .0081409
+                fdi |   .0910125   .1057148     0.86   0.391    -.1184894    .3005143
+        agri_dollar |  -.1308465   .1819528    -0.72   0.474    -.4914342    .2297413
+        manu_dollar |  -.1660193   .2609658    -0.64   0.526    -.6831923    .3511537
+     service_dollar |   .0012496   .0927555     0.01   0.989      -.18257    .1850692
+              _cons |   4.216533   9.665159     0.44   0.664    -14.93754    23.37061
+-------------------------------------------------------------------------------------
+
+. outreg2 using ols_interaction_20240415, excel dec(3) 
+ols_interaction_20240415.xml
+dir : seeout
+
+. 
+. **export composition
+. gen eagri_dollar = expo_agri*dollarization
+
+. gen fuel_dollar = expo_fuel*dollarization
+
+. gen food_dollar = expo_food*dollarization
+
+. reg gdp_pc_growth dollarization govt_exp investment consumption export_percent t saving structure_ag
+> ri structure_manu structure_service expo_agri expo_fuel expo_food political_stability export_growth 
+> exchange_rate remittance fdi eagri_dollar fuel_dollar food_dollar
+
+      Source |       SS           df       MS      Number of obs   =       132
+-------------+----------------------------------   F(21, 110)      =      5.87
+       Model |  1005.09425        21   47.861631   Prob > F        =    0.0000
+    Residual |  897.619437       110   8.1601767   R-squared       =    0.5282
+-------------+----------------------------------   Adj R-squared   =    0.4382
+       Total |  1902.71369       131   14.524532   Root MSE        =    2.8566
+
+-------------------------------------------------------------------------------------
+      gdp_pc_growth |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------------+----------------------------------------------------------------
+      dollarization |   .6862541   2.001317     0.34   0.732    -3.279886    4.652394
+           govt_exp |  -.1692924   .1433796    -1.18   0.240    -.4534371    .1148524
+         investment |  -.0227268   .0620315    -0.37   0.715    -.1456586    .1002051
+        consumption |   .0007295   .0938937     0.01   0.994    -.1853457    .1868047
+     export_percent |  -.0603278   .0383515    -1.57   0.119    -.1363315     .015676
+                  t |   .1803968   .0546727     3.30   0.001     .0720484    .2887452
+             saving |    .085558   .0980057     0.87   0.385    -.1086664    .2797824
+     structure_agri |   .0446394   .1373538     0.32   0.746    -.2275636    .3168423
+     structure_manu |  -.0394786   .0933009    -0.42   0.673    -.2243791     .145422
+  structure_service |  -.0861426    .062541    -1.38   0.171    -.2100842     .037799
+          expo_agri |  -.3088103   .1641841    -1.88   0.063    -.6341847    .0165641
+          expo_fuel |  -.0087641   .0169483    -0.52   0.606    -.0423516    .0248235
+          expo_food |   .0189154   .0166471     1.14   0.258    -.0140752    .0519061
+political_stability |   .9282916   .4531998     2.05   0.043     .0301559    1.826427
+      export_growth |   .2516219   .0346067     7.27   0.000     .1830395    .3202043
+      exchange_rate |   .0083886   .0205818     0.41   0.684    -.0323997    .0491769
+         remittance |  -.0853962   .0462576    -1.85   0.068     -.177068    .0062755
+                fdi |   .1141113    .105495     1.08   0.282     -.094955    .3231776
+       eagri_dollar |    .663262   .2722501     2.44   0.016     .1237263    1.202798
+        fuel_dollar |  -.0063135   .0341161    -0.19   0.854    -.0739235    .0612965
+        food_dollar |  -.0265758   .0363174    -0.73   0.466    -.0985484    .0453967
+              _cons |   6.283661   9.303134     0.68   0.501    -12.15297    24.72029
+-------------------------------------------------------------------------------------
+
+. outreg2 using ols_interaction_20240415, excel dec(3)  
+ols_interaction_20240415.xml
+dir : seeout
+
+. 
+. *found sig syn effect with food export
+. 
+. 
+. **panel and fixed effect
+. xtset t
+       panel variable:  t (unbalanced)
+
+. xtreg gdp_pc_growth dollarization govt_exp investment consumption export_percent saving structure_ag
+> ri structure_manu structure_service expo_agri expo_fuel expo_food political_stability export_growth 
+> exchange_rate remittance fdi, fe
+
+Fixed-effects (within) regression               Number of obs     =        132
+Group variable: t                               Number of groups  =         17
+
+R-sq:                                           Obs per group:
+     within  = 0.3880                                         min =          2
+     between = 0.4188                                         avg =        7.8
+     overall = 0.2885                                         max =         13
+
+                                                F(17,98)          =       3.65
+corr(u_i, Xb)  = -0.1473                        Prob > F          =     0.0000
+
+-------------------------------------------------------------------------------------
+      gdp_pc_growth |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------------+----------------------------------------------------------------
+      dollarization |   2.400963   .8141773     2.95   0.004     .7852547    4.016672
+           govt_exp |  -.0121448   .1402687    -0.09   0.931    -.2905035     .266214
+         investment |  -.1528396   .0852171    -1.79   0.076    -.3219502     .016271
+        consumption |   .0877329   .0863835     1.02   0.312    -.0836924    .2591582
+     export_percent |  -.0738274   .0375469    -1.97   0.052     -.148338    .0006832
+             saving |   .1890144   .0919218     2.06   0.042     .0065985    .3714303
+     structure_agri |   .0651497   .1301048     0.50   0.618     -.193039    .3233384
+     structure_manu |  -.0013427   .0896423    -0.01   0.988    -.1792349    .1765495
+  structure_service |  -.0406592   .0594738    -0.68   0.496    -.1586829    .0773645
+          expo_agri |  -.2348012   .2596303    -0.90   0.368     -.750029    .2804266
+          expo_fuel |    .003003   .0182569     0.16   0.870    -.0332272    .0392332
+          expo_food |   .0586355   .0165928     3.53   0.001     .0257076    .0915634
+political_stability |   1.008559   .4304632     2.34   0.021     .1543186    1.862799
+      export_growth |    .194209   .0413526     4.70   0.000     .1121461     .276272
+      exchange_rate |   .0217992   .0205369     1.06   0.291    -.0189556    .0625541
+         remittance |  -.0897244   .0751695    -1.19   0.236    -.2388959    .0594471
+                fdi |   -.003811   .1204178    -0.03   0.975    -.2427762    .2351542
+              _cons |  -4.545635   8.933139    -0.51   0.612    -22.27316    13.18189
+--------------------+----------------------------------------------------------------
+            sigma_u |    2.48698
+            sigma_e |  2.6724804
+                rho |  .46409297   (fraction of variance due to u_i)
+-------------------------------------------------------------------------------------
+F test that all u_i=0: F(16, 98) = 2.91                      Prob > F = 0.0006
+
+. outreg2 using ols_fe_20240415, excel dec(3)  replace
+ols_fe_20240415.xml
+dir : seeout
+
+. 
+. xi:reg gdp_pc_growth dollarization t i.countrycode govt_exp investment consumption export_percent sa
+> ving structure_agri structure_manu structure_service expo_agri expo_fuel expo_food political_stabili
+> ty export_growth exchange_rate remittance fdi
+i.countrycode     _Icountryco_1-13    (_Icountryco_1 for count~de==BHS omitted)
+
+      Source |       SS           df       MS      Number of obs   =       132
+-------------+----------------------------------   F(30, 101)      =      7.24
+       Model |   1298.9475        30    43.29825   Prob > F        =    0.0000
+    Residual |  603.766189       101  5.97788306   R-squared       =    0.6827
+-------------+----------------------------------   Adj R-squared   =    0.5884
+       Total |  1902.71369       131   14.524532   Root MSE        =     2.445
+
+-------------------------------------------------------------------------------------
+      gdp_pc_growth |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------------+----------------------------------------------------------------
+      dollarization |   5.178904   1.066868     4.85   0.000     3.062524    7.295284
+                  t |   .2480343   .0656155     3.78   0.000     .1178708    .3781978
+      _Icountryco_2 |  -12.78044   3.917062    -3.26   0.002    -20.55083   -5.010038
+      _Icountryco_3 |  -26.05445   6.716937    -3.88   0.000    -39.37905   -12.72985
+      _Icountryco_4 |  -9.291878   6.229213    -1.49   0.139    -21.64896    3.065205
+      _Icountryco_5 |  -7.985605   4.253213    -1.88   0.063    -16.42283    .4516252
+      _Icountryco_6 |   -13.9431   6.814059    -2.05   0.043    -27.46036   -.4258389
+      _Icountryco_7 |  -8.287081   4.093591    -2.02   0.046    -16.40767   -.1664965
+      _Icountryco_8 |  -13.76915   4.875926    -2.82   0.006    -23.44167   -4.096621
+      _Icountryco_9 |  -12.53604    5.13124    -2.44   0.016    -22.71504   -2.357042
+     _Icountryco_10 |  -28.15824   6.897228    -4.08   0.000    -41.84048     -14.476
+     _Icountryco_11 |  -23.26739   6.200488    -3.75   0.000    -35.56749   -10.96729
+     _Icountryco_12 |  -16.12138   4.419617    -3.65   0.000    -24.88871   -7.354045
+     _Icountryco_13 |  -16.42341   7.099614    -2.31   0.023    -30.50714    -2.33969
+           govt_exp |  -.0167191   .3059982    -0.05   0.957    -.6237372    .5902991
+         investment |  -.0320501   .0547784    -0.59   0.560    -.1407158    .0766156
+        consumption |   .4170449   .2056711     2.03   0.045     .0090488     .825041
+     export_percent |  -.1244084   .0773742    -1.61   0.111    -.2778979    .0290811
+             saving |   .3690956    .158181     2.33   0.022     .0553071    .6828841
+     structure_agri |   .9394048   .2974396     3.16   0.002     .3493646    1.529445
+     structure_manu |  -.1066613   .2190156    -0.49   0.627    -.5411294    .3278069
+  structure_service |  -.4277373   .1538175    -2.78   0.006    -.7328697   -.1226048
+          expo_agri |  -.0639756   .1070472    -0.60   0.551    -.2763285    .1483773
+          expo_fuel |  -.0073649   .0126934    -0.58   0.563    -.0325452    .0178153
+          expo_food |   .0020649   .0118935     0.17   0.863    -.0215286    .0256583
+political_stability |   .5118177   1.100037     0.47   0.643     -1.67036    2.693995
+      export_growth |    .253509   .0302713     8.37   0.000      .193459    .3135591
+      exchange_rate |    .078722   .0273609     2.88   0.005     .0244454    .1329987
+         remittance |  -.0725397   .0422709    -1.72   0.089    -.1563939    .0113145
+                fdi |   .1657462    .092512     1.79   0.076    -.0177728    .3492652
+              _cons |  -7.355463    20.8352    -0.35   0.725    -48.68689    33.97597
+-------------------------------------------------------------------------------------
+
+. outreg2 using ols_dummycountry_20240415, excel dec(3)  replace
+ols_dummycountry_20240415.xml
+dir : seeout
+
+. 
+. 
+. **secondary Ys
+. reg export_growth dollarization govt_exp investment consumption t saving structure_agri structure_ma
+> nu structure_service expo_agri expo_fuel expo_food political_stability  exchange_rate remittance fdi
+
+      Source |       SS           df       MS      Number of obs   =       132
+-------------+----------------------------------   F(16, 115)      =      1.71
+       Model |  1697.63225        16  106.102016   Prob > F        =    0.0538
+    Residual |  7127.52168       115  61.9784494   R-squared       =    0.1924
+-------------+----------------------------------   Adj R-squared   =    0.0800
+       Total |  8825.15393       131  67.3675872   Root MSE        =    7.8726
+
+-------------------------------------------------------------------------------------
+      export_growth |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------------+----------------------------------------------------------------
+      dollarization |   .8602444   2.221841     0.39   0.699    -3.540795    5.261284
+           govt_exp |  -.3026212   .3766024    -0.80   0.423    -1.048598    .4433556
+         investment |  -.1205224   .1680906    -0.72   0.475    -.4534775    .2124328
+        consumption |  -.0280611   .2276793    -0.12   0.902      -.47905    .4229279
+                  t |   .1611382   .1446808     1.11   0.268    -.1254466     .447723
+             saving |  -.1366409   .2572231    -0.53   0.596    -.6461504    .3728686
+     structure_agri |   .5963589   .2880805     2.07   0.041     .0257268    1.166991
+     structure_manu |   .1754933   .2465179     0.71   0.478    -.3128112    .6637978
+  structure_service |   .1306954   .1587401     0.82   0.412    -.1837383     .445129
+          expo_agri |    .470734   .3249435     1.45   0.150    -.1729165    1.114385
+          expo_fuel |   .0116587   .0393051     0.30   0.767    -.0661972    .0895145
+          expo_food |  -.0370427   .0354209    -1.05   0.298    -.1072048    .0331193
+political_stability |   .8540386   1.216328     0.70   0.484    -1.555273     3.26335
+      exchange_rate |  -.0908076   .0544563    -1.67   0.098     -.198675    .0170598
+         remittance |  -.2383721   .1248226    -1.91   0.059    -.4856218    .0088775
+                fdi |   .6108725    .277918     2.20   0.030     .0603704    1.161375
+              _cons |   7.976696   24.71944     0.32   0.748    -40.98777    56.94116
+-------------------------------------------------------------------------------------
+
+. outreg2 using ols_secondary_20240415, excel dec(3)  replace
+ols_secondary_20240415.xml
+dir : seeout
+
+. 
+. 
+. reg political_stability dollarization govt_exp investment consumption export_percent t saving struct
+> ure_agri structure_manu structure_service expo_agri expo_fuel expo_food  export_growth exchange_rate
+>  remittance fdi
+
+      Source |       SS           df       MS      Number of obs   =       132
+-------------+----------------------------------   F(17, 114)      =      6.70
+       Model |  39.9964891        17  2.35273466   Prob > F        =    0.0000
+    Residual |  40.0428828       114  .351253358   R-squared       =    0.4997
+-------------+----------------------------------   Adj R-squared   =    0.4251
+       Total |   80.039372       131  .610987572   Root MSE        =    .59267
+
+-----------------------------------------------------------------------------------
+political_stabi~y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+------------------+----------------------------------------------------------------
+    dollarization |  -.0351926    .169317    -0.21   0.836    -.3706083    .3002231
+         govt_exp |  -.0356031   .0294339    -1.21   0.229    -.0939114    .0227053
+       investment |  -.0067671   .0126695    -0.53   0.594    -.0318653    .0183311
+      consumption |  -.0197311   .0184213    -1.07   0.286    -.0562235    .0167613
+   export_percent |   .0168784   .0077382     2.18   0.031     .0015491    .0322078
+                t |  -.0023839   .0112649    -0.21   0.833    -.0246996    .0199318
+           saving |  -.0410304   .0194122    -2.11   0.037    -.0794858   -.0025749
+   structure_agri |  -.0037849   .0283426    -0.13   0.894    -.0599314    .0523617
+   structure_manu |  -.0202503   .0185698    -1.09   0.278    -.0570368    .0165363
+structure_service |    .037998   .0122589     3.10   0.002     .0137132    .0622828
+        expo_agri |   .0019042   .0247452     0.08   0.939    -.0471158    .0509241
+        expo_fuel |  -.0006848   .0029599    -0.23   0.817    -.0065483    .0051787
+        expo_food |   .0027703   .0026682     1.04   0.301    -.0025153    .0080559
+    export_growth |   .0023674   .0071082     0.33   0.740    -.0117138    .0164485
+    exchange_rate |   .0062321   .0041275     1.51   0.134    -.0019444    .0144087
+       remittance |  -.0090284   .0095567    -0.94   0.347    -.0279602    .0099034
+              fdi |  -.0081097   .0213459    -0.38   0.705    -.0503958    .0341764
+            _cons |  -.3609297   1.879354    -0.19   0.848    -4.083915    3.362056
+-----------------------------------------------------------------------------------
+
+. outreg2 using ols_secondary_20240415, excel dec(3)
+ols_secondary_20240415.xml
+dir : seeout
+
+. 
+. reg exchange_rate dollarization govt_exp investment consumption export_percent t saving structure_ag
+> ri structure_manu structure_service expo_agri expo_fuel expo_food political_stability export_growth 
+> remittance fdi
+
+      Source |       SS           df       MS      Number of obs   =       132
+-------------+----------------------------------   F(17, 114)      =      3.10
+       Model |  9357.30199        17  550.429529   Prob > F        =    0.0002
+    Residual |  20213.7885       114  177.313934   R-squared       =    0.3164
+-------------+----------------------------------   Adj R-squared   =    0.2145
+       Total |  29571.0905       131  225.733515   Root MSE        =    13.316
+
+-------------------------------------------------------------------------------------
+      exchange_rate |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+--------------------+----------------------------------------------------------------
+      dollarization |   .9978444   3.803759     0.26   0.794    -6.537374    8.533062
+           govt_exp |  -1.393325   .6526276    -2.13   0.035    -2.686175   -.1004751
+         investment |    .086868   .2848963     0.30   0.761    -.4775094    .6512453
+        consumption |   .0043963   .4159631     0.01   0.992    -.8196234     .828416
+     export_percent |   .1841177   .1766123     1.04   0.299    -.1657499    .5339853
+                  t |   .3706766   .2507559     1.48   0.142     -.126069    .8674222
+             saving |  -.3840834   .4431566    -0.87   0.388    -1.261973    .4938065
+     structure_agri |   1.050782   .6291971     1.67   0.098    -.1956524    2.297217
+     structure_manu |  -.3278108   .4182678    -0.78   0.435    -1.156396    .5007746
+  structure_service |   .2631259   .2857422     0.92   0.359    -.3029271     .829179
+          expo_agri |  -.8510682    .550241    -1.55   0.125    -1.941091     .238955
+          expo_fuel |    .009567   .0665114     0.14   0.886    -.1221916    .1413256
+          expo_food |    .075191   .0598174     1.26   0.211    -.0433069    .1936888
+political_stability |   3.146008   2.083574     1.51   0.134    -.9815363    7.273553
+      export_growth |  -.2840472   .1575522    -1.80   0.074    -.5961568    .0280624
+         remittance |   .0254704   .2155443     0.12   0.906    -.4015212    .4524621
+                fdi |  -.2967909   .4790942    -0.62   0.537    -1.245873    .6522911
+              _cons |   94.66043   41.29075     2.29   0.024     12.86376    176.4571
+-------------------------------------------------------------------------------------
+
+. outreg2 using ols_secondary_20240415, excel dec(3)
+ols_secondary_20240415.xml
+dir : seeout
+
+. 
+. 
+. 
+. cap log close
